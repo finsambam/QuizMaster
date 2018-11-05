@@ -46,6 +46,8 @@ gem "font-awesome-rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'rspec-rails', '~> 3.8.0'
+  gem 'factory_bot_rails', '~> 4.10.0'
   gem 'byebug', platform: :mri
 end
 
@@ -56,6 +58,19 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'spring-commands-rspec'
+end
+
+group :test do
+  gem 'capybara', '~> 2.15.4'
+  gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
+  gem 'launchy', '~> 2.4.3'
+  gem 'shoulda-matchers',
+    git: 'https://github.com/thoughtbot/shoulda-matchers.git',
+    branch: 'rails-5'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -1,0 +1,12 @@
+<% if obj.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-danger">
+      <span><%= "There were #{pluralize(obj.errors.count, 'error')} errors." %></span> 
+      <ul>
+        <% obj.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
