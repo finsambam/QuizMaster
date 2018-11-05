@@ -1,0 +1,12 @@
+<div class="header-content">
+  <h2 class="page-header">Questions</h2>
+</div>
+<div class="table-container">
+  <div id="toolbar">
+    <%= link_to "<i class='fa fa-plus' aria-hidden='true'></i>
+ Create".html_safe , new_question_path, {class: "btn btn-success"}%>
+  </div>
+  <table id="questions-table" class="table table-bordered table-stripped"></table>
+</div>
+
+<script><%= render('questions/js/index.js').html_safe %></script>

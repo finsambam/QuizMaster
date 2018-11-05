@@ -1,0 +1,49 @@
+<%= form_for(@question, html: {class: "form-horizontal"}) do |f| %>
+  <div class="form-group required">
+    <%= f.label :text,"Question" , class: "col-sm-3 control-label" %>
+    <div class="col-sm-5">
+      <%= f.text_field :text, class: 'form-control', placeholder: "Type A question", autofocus: true %>
+    </div>
+  </div>
+
+  <div class="form-group required">
+    <%= f.label :question_type,"Type" , class: "col-sm-3 control-label" %>
+    <div class="col-sm-5">
+      <%= f.select :question_type, options_for_select(["essay", "multiple choice" ,"true or false"]), class: 'form-control', placeholder: "Questions Type" %>
+    </div>
+  </div>
+
+  <div class="form-group required">
+    <%= f.label :answer, class: "col-sm-3 control-label" %>
+    <div class="col-sm-5">
+      <%= f.text_field :answer, class: 'form-control', placeholder: "Type an answer" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :answer_options, class: "col-sm-3 control-label" %>
+    <div class="col-sm-5">
+      <%= f.text_field :answer_option_a, class: 'form-control', placeholder: "A" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-5">
+      <%= f.text_field :answer_option_b, class: 'form-control', placeholder: "B" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-5">
+      <%= f.text_field :answer_option_c, class: 'form-control', placeholder: "C" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-5">
+      <%= f.text_field :answer_option_d, class: 'form-control', placeholder: "D" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-5">
+      <%= f.submit "Save", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

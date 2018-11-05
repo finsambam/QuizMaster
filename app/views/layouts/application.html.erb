@@ -26,7 +26,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <% if user_signed_in? %>
-              <li><a href="#">Questions</a></li>
+              <li><%= link_to "Questions", questions_path %></li>
             <% end %>
             <li><a href="#">Take a Quiz</a></li>
           </ul>
