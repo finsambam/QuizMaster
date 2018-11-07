@@ -97,6 +97,7 @@ GEM
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     hashdiff (0.3.7)
+    humanize (1.8.1)
     i18n (1.1.1)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
@@ -251,6 +252,7 @@ DEPENDENCIES
   devise
   factory_bot_rails (~> 4.10.0)
   font-awesome-rails
+  humanize
   jbuilder (~> 2.5)
   jquery-easing-rails
   jquery-rails

@@ -1,5 +1,7 @@
+require 'humanize'
+
 class QuizzesController < ApplicationController
-	before_action :find_quiz, only: [:do_quiz, :submit_quiz]
+  before_action :find_quiz, only: [:do_quiz, :submit_quiz]
 
   def new
     @quiz = Quiz.new
@@ -20,7 +22,20 @@ class QuizzesController < ApplicationController
   end
 
   def submit_quiz
-  	correct answer = check_answer(params[:answers])
+    begin
+      @quiz.submit_time = Time.now
+      correct_answer = check_answer(params[:answers])
+      @quiz.score = calculate_score(correct_answer[:total], params[:answers].length)
+      if @quiz.save
+        respond_to do |format|
+          format.json { render :json => {:status => "success", :data => {result: @quiz, answers: correct_answer} } }
+        end
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.json { render :json => {:status => "error", :data => e} }
+      end
+    end
   end
 
   private
@@ -32,11 +47,36 @@ class QuizzesController < ApplicationController
     @quiz = Quiz.find(params[:id])
   end
 
+  def is_numeric?(string)
+    !!Kernel.Float(string) 
+  rescue TypeError, ArgumentError
+    false
+  end
+
   def check_answer(answers)
-  	correct_answer = 0
-  	answers.each do |answer|
-  		byebug
-  		item = answer
-  	end
+    total_correct = 0
+    result = { data_list: [], total: total_correct }
+    answers.each do |item|
+      question = Question.find(item[:id])
+      if is_numeric?(question.answer) && !is_numeric?(item[:answer])
+        question_answer = question.answer.to_i.humanize
+      else
+        question_answer = question.answer
+      end
+      data = { question: question, answer: item[:answer], is_correct: false }
+      if question_answer.downcase.gsub(/\s+/, '') == item[:answer].downcase.gsub(/\s+/, '')
+        data[:is_correct] = true
+        total_correct = total_correct + 1
+      end
+      result[:data_list] << data
+    end
+    result[:total] = total_correct
+    return result
+
+  end
+
+  def calculate_score(correct, total)
+    score = (100/total) * correct
+    return score
   end
 end
