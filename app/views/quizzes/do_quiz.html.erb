@@ -1,0 +1,71 @@
+<%= stylesheet_link_tag 'quizzes', 'data-turbolinks-track': 'reload' %>
+<div class="row">
+  <div class="col-md-12">
+    <form id="msform">
+      <!-- progressbar -->
+      <ul id="progressbar">
+        <% for i in 0..@questions.length - 1 do %>
+          <% if i == 0 %>
+            <li class="active"></li>
+          <% else %>
+            <li></li>    
+          <% end %>
+        <% end %>
+      </ul>
+      <!-- fieldsets -->
+      <% @questions.each_with_index do |q, idx| %>
+        <fieldset data-id="<%= "#{q.id}" %>">
+          <h2 class="fs-title"><%= "Questions #{idx + 1}" %></h2>
+          <h3 class="fs-subtitle"><%= "#{q.text}" %></h3>
+          <% if q.question_type == "essay" %>
+            <textarea class="form-control answer" name="<%= "answer_#{idx + 1}" %>" rows="4" onkeydown="if(this.value.length>=4000)this.value=this.value.substring(0,3999);"></textarea>
+          <% elsif q.question_type == "multiple choice" %>
+            <div class="col-md-12">
+              <label>
+                <input type="radio" class="answer" name="<%= "answer_#{idx + 1}" %>" value="a"> <%= "A. #{q.answer_option_a}"%>
+              </label>
+            </div>
+            <div class="col-md-12">
+              <label>
+                <input type="radio" class="answer" name="<%= "answer_#{idx + 1}" %>" value="b"> <%= "B. #{q.answer_option_b}"%>
+              </label>
+            </div>
+            <div class="col-md-12">
+              <label>
+                <input type="radio" class="answer" name="<%= "answer_#{idx + 1}" %>" value="c"> <%= "C. #{q.answer_option_c}"%>
+              </label>
+            </div>
+            <div class="col-md-12">
+              <label>
+                <input type="radio" class="answer" name="<%= "answer_#{idx + 1}" %>" value="d"> <%= "D. #{q.answer_option_d}"%>
+              </label>
+            </div>
+          <% else %>
+            <div class="col-md-12">
+              <label>
+                <input type="radio" class="answer" name="<%= "answer_#{idx + 1}" %>" value="true"> True
+              </label>
+            </div>
+            <div class="col-md-12">
+              <label>
+                <input type="radio" class="answer" name="<%= "answer_#{idx + 1}" %>" value="false"> False
+              </label>
+            </div>
+          <% end %>
+
+          <% if idx == 0 %>
+            <input type="button" name="next" class="next action-button" value="Next" />
+          <% elsif idx == @questions.length-1%>
+            <input type="button" name="previous" class="previous action-button" value="Previous" />
+            <input type="submit" name="submit" class="submit action-button" value="Submit" />
+          <% else %>
+            <input type="button" name="previous" class="previous action-button" value="Previous" />
+            <input type="button" name="next" class="next action-button" value="Next" />
+          <% end %>
+        </fieldset>
+      <% end %>
+    </form>
+  </div>
+</div>
+
+<script><%= render('quizzes/js/do_quiz.js').html_safe %></script>

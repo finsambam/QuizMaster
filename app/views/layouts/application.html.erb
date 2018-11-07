@@ -28,7 +28,7 @@
             <% if user_signed_in? %>
               <li><%= link_to "Questions", questions_path %></li>
             <% end %>
-            <li><a href="#">Take a Quiz</a></li>
+            <li><%= link_to "Take a Quiz", quizzes_new_path %></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <% if user_signed_in? %>

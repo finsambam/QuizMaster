@@ -27,10 +27,11 @@ ActiveRecord::Schema.define(version: 20181105212435) do
 
   create_table "quizzes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email"
-    t.float    "score",      limit: 24
-    t.date     "take_date"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "start_time"
+    t.float    "score",       limit: 24
+    t.datetime "submit_time"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
