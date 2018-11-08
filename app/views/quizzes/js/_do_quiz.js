@@ -1,9 +1,9 @@
 ((w) => {
   "use strict";
   
-  var current_fs, next_fs, previous_fs; //fieldsets
-  var left, opacity, scale; //fieldset properties which we will animate
-  var animating; //flag to prevent quick multi-click glitches
+  let current_fs, next_fs, previous_fs; //fieldsets
+  let left, opacity, scale; //fieldset properties which we will animate
+  let animating; //flag to prevent quick multi-click glitches
 
   $(".next").on("click",function() {
     if(animating) return false;
@@ -66,11 +66,11 @@
   });
 
   $(".submit").on("click", function(){
-    const params = {
+    let params = {
       id: w.location.href.split("/")[4],
       answers: []
     };
-    const isConfirmed = confirm("Are you sure?");
+    let isConfirmed = confirm("Are you sure?");
     if (isConfirmed) {
       const fieldsets = $("#msform fieldset").toArray();
       fieldsets.forEach((item) => {
@@ -91,10 +91,25 @@
         data: JSON.stringify(params)
       }).done((result) => {
         console.log(result);
+        fireResulModal(result.data.result);
       }).fail((j, t, e) => {
         console.log(j, t, e);
       })
     }; 
     return false;
   });
+
+  $("#resultModal").on("hidden.bs.modal", () => { 
+    window.location="/";
+  });
+
+  let fireResulModal = (r) => {
+    $("#result-email").val(r.email);
+    $("#result-start-time").val(r.start_time);
+    $("#result-end-time").val(r.score);
+    $("#result-score").val(r.submit_time);
+
+    //show result modal
+    $("#resultModal").modal('show');
+  };
 })(window);

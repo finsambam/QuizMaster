@@ -16,3 +16,8 @@
 @import "bootstrap/theme";
 @import "bootstrap-table";
 @import "font-awesome";
+
+.form-group.required .control-label:after { 
+   content:"*";
+   color:red;
+}

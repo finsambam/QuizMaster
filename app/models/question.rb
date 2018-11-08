@@ -4,5 +4,5 @@ class Question < ApplicationRecord
   validates :question_type, presence: true
 
   belongs_to :user
-  scope :random_except_email, ->(email) {joins(:user).where.not(users: {email: email}).order("RAND()").limit(20)}
+  scope :random_except_email, ->(email) {joins(:user).where.not(users: {email: email}).order("RAND()").limit(15)}
 end

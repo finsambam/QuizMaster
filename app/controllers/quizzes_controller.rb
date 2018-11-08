@@ -25,10 +25,10 @@ class QuizzesController < ApplicationController
     begin
       @quiz.submit_time = Time.now
       correct_answer = check_answer(params[:answers])
-      @quiz.score = calculate_score(correct_answer[:total], params[:answers].length)
+      @quiz.score = calculate_score(correct_answer, params[:answers].length)
       if @quiz.save
         respond_to do |format|
-          format.json { render :json => {:status => "success", :data => {result: @quiz, answers: correct_answer} } }
+          format.json { render :json => {:status => "success", :data => {result: @quiz} } }
         end
       end
     rescue Exception => e
@@ -55,7 +55,6 @@ class QuizzesController < ApplicationController
 
   def check_answer(answers)
     total_correct = 0
-    result = { data_list: [], total: total_correct }
     answers.each do |item|
       question = Question.find(item[:id])
       if is_numeric?(question.answer) && !is_numeric?(item[:answer])
@@ -63,16 +62,11 @@ class QuizzesController < ApplicationController
       else
         question_answer = question.answer
       end
-      data = { question: question, answer: item[:answer], is_correct: false }
       if question_answer.downcase.gsub(/\s+/, '') == item[:answer].downcase.gsub(/\s+/, '')
-        data[:is_correct] = true
         total_correct = total_correct + 1
       end
-      result[:data_list] << data
     end
-    result[:total] = total_correct
-    return result
-
+    return total_correct
   end
 
   def calculate_score(correct, total)
